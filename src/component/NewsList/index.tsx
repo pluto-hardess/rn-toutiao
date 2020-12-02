@@ -5,7 +5,7 @@ interface Props {
   
 }
 
-const Tab = (props: Props) => {
+const index = (props: Props) => {
   return (
     <View>
       
@@ -13,4 +13,4 @@ const Tab = (props: Props) => {
   )
 }
 
-export default Tab
+export default index

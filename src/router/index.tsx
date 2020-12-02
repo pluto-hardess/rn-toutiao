@@ -1,22 +1,45 @@
 import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import routes from './routes'
+import { createStackNavigator } from '@react-navigation/stack'
+import { HOME, SEARCH, DETAIL } from '../constant/index'
+import Icon from '../component/Icon'
+import HomePage from '../pages/Home'
+import SearchPage from '../pages/Search'
 
-const { Screen, Navigator } = createBottomTabNavigator()
+const Tab = createBottomTabNavigator()
 
-const initialPage = routes[0].name
+const Home = createStackNavigator()
+const Search = createStackNavigator()
+
+const HomeStackScreen = () => {
+  return (
+    <Home.Navigator>
+      <Home.Screen name={HOME} component={HomePage}/>
+    </Home.Navigator>
+  )
+}
+
+const SearchStackScreen = () => {
+  return (
+    <Search.Navigator>
+      <Search.Screen name={SEARCH} component={SearchPage}/>
+    </Search.Navigator>
+  )
+}
 
 const Router = () => {
   return (
-    <Navigator initialRouteName={initialPage}>
-      {routes.map(route => (
-        <Screen name={route.name} options={{
-          tabBarIcon: route.icon
-        }} key={route.name}>
-          {props => <route.component {...props}/>}
-        </Screen>
-      ))}
-    </Navigator>
+    <NavigationContainer>
+      <Tab.Navigator initialRouteName={HOME}>
+        <Tab.Screen name={HOME} component={HomeStackScreen} options={{
+          tabBarIcon: (params: any) => <Icon name='md-home' focused={params.focused}/>
+        }}/>
+        <Tab.Screen name={SEARCH} component={SearchStackScreen} options={{
+          tabBarIcon: (params: any) => <Icon name='md-search' focused={params.focused}/>
+        }}/>
+      </Tab.Navigator>
+    </NavigationContainer>
   )
 }
 

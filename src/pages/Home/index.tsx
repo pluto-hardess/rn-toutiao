@@ -1,16 +1,18 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import styled from 'styled-components/native'
+import TabList from '../../component/TabList/index'
+import NewsList from '../../component/NewsList/index'
 
-type Props = {
-  navigation: any
-}
+const HomeContainer = styled.View`
+  flex: 1;
+`
 
-const Home = ({ navigation }: Props) => {
-
+const Home = () => {
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <HomeContainer>
+      <TabList />
+      <NewsList />
+    </HomeContainer>
   )
 }
 
