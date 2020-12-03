@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
 import { newsReducer } from './newsReducer'
+import { tabReducer } from './tabReducer'
 
 export const rootReducer = combineReducers({
-  newsReducer
+  news: newsReducer,
+  tab: tabReducer
 })

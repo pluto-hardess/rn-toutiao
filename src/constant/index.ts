@@ -13,47 +13,56 @@ export const tabList = [
   {
     tabId: 0,
     tabName: '推荐',
-    selected: true
+    selected: true,
+    reqField: 'home'
   },
   {
     tabId: 1,
     tabName: VIDEO,
-    selected: false
+    selected: false,
+    reqField: 'video'
   },
   {
     tabId: 2,
     tabName: HOT_SPOT,
-    selected: false
+    selected: false,
+    reqField: 'spot'
   },
   {
     tabId: 3,
     tabName: COMMUNITY,
-    selected: false
+    selected: false,
+    reqField: 'community'
   },
   {
     tabId: 4,
     tabName: ENTERTAINMENT,
-    selected: false
+    selected: false,
+    reqField: 'entertain'
   },
   {
     tabId: 5,
     tabName: MILITARY,
-    selected: false
+    selected: false,
+    reqField: 'military'
   },
   {
     tabId: 6,
     tabName: TECHNOLOGY,
-    selected: false
+    selected: false,
+    reqField: 'technology'
   },
   {
     tabId: 7,
     tabName: SPORTS,
-    selected: false
+    selected: false,
+    reqField: 'sports'
   },
   {
     tabId: 8,
     tabName: FINANCE,
-    selected: false
+    selected: false,
+    reqField: 'finance'
   }
 ]
 
