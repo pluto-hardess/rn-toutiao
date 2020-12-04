@@ -54,7 +54,7 @@ const Item = ({ item }: { item: { title: string } }) => {
   )
 }
 
-const NewsList = () => {
+const NewsList = ({ setController }: { setController: any }) => {
   const dispatch = useDispatch();
   const { selectedTabId, tabList } = useSelector((state: State) => state.tab);
   const { data: news, fetchLoading, hasMore } = useSelector(
@@ -74,6 +74,7 @@ const NewsList = () => {
 
   const handleRefresh = useCallback(() => {
     const { controller } = createController()
+    setController((_: any) => controller)
     dispatch(fetchNews({
       type: getReqField(selectedTabId),
       controller
@@ -82,6 +83,7 @@ const NewsList = () => {
 
   useEffect(() => {
     const { controller } = createController()
+    setController((_: any) => controller)
     dispatch(fetchNews({
       type: getReqField(selectedTabId),
       controller

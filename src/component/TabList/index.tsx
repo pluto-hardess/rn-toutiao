@@ -28,10 +28,12 @@ const TabContent = styled.Text`
 
 type State = {
   tab: {
+    selectedTabId: number;
     tabList: {
       selected: boolean;
       tabId: number;
       tabName: string;
+      reqField: string;
     }[];
   },
   news: {
@@ -39,20 +41,20 @@ type State = {
   }
 };
 
-const TabList = () => {
+const TabList = ({ controller }: { controller: undefined | AbortController }) => {
   const dispatch = useDispatch();
-  const tabList = useSelector((state: State) => state.tab.tabList);
   const fetchLoading = useSelector((state: State) => state.news.fetchLoading)
+  const { tabList } = useSelector((state: State) => state.tab)
 
   const handlePressTab = useCallback(
-    ({ tabId }) => {
+    ({ tabId }: { tabId: number }) => {
       if (fetchLoading) {
-        
+        controller?.abort()
       }
-      dispatch(pressTab(tabId));
+      dispatch(pressTab(tabId))
     },
-    [tabList, fetchLoading]
-  );
+    [tabList, fetchLoading, controller]
+  )
 
   return (
     <TabContainer>
