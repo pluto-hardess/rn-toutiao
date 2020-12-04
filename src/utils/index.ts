@@ -27,21 +27,3 @@ export function setSpText(size: number) {
   const calcSize = Math.round((size * scale) / fontScale + 0.5);
   return calcSize;
 }
-
-/**
- * 设置高度
- */
-export function scaleSizeH(size: number) {
-  const scaleHeight = (size * screenPxHeight) / designHeight;
-  const calcSize = Math.round(scaleHeight / Pixel + 0.5);
-  return calcSize;
-}
-
-/**
- * 设置宽度
- */
-export function scaleSizeW(size: number) {
-  const scaleWidth = (size * screenPxWidth) / designWidth;
-  const calcSize = Math.round(scaleWidth / Pixel + 0.5);
-  return calcSize;
-}

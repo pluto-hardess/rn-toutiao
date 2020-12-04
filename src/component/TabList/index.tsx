@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import styled from "styled-components/native";
 import { setSpText } from "../../utils/index";
-import { ScrollView, TouchableWithoutFeedback, Text } from "react-native";
+import { ScrollView } from "react-native";
 import Color from "../../constant/color";
 import { useDispatch, useSelector } from "react-redux";
 import { pressTab } from "../../redux/actions/tabAction";
@@ -33,18 +33,25 @@ type State = {
       tabId: number;
       tabName: string;
     }[];
-  };
+  },
+  news: {
+    fetchLoading: boolean
+  }
 };
 
 const TabList = () => {
   const dispatch = useDispatch();
   const tabList = useSelector((state: State) => state.tab.tabList);
+  const fetchLoading = useSelector((state: State) => state.news.fetchLoading)
 
   const handlePressTab = useCallback(
     ({ tabId }) => {
+      if (fetchLoading) {
+        
+      }
       dispatch(pressTab(tabId));
     },
-    [tabList]
+    [tabList, fetchLoading]
   );
 
   return (
