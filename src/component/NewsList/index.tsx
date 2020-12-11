@@ -12,6 +12,7 @@ import {
   ThreeNormalPics,
 } from "../../component/Template/index";
 import { useNavigation } from '@react-navigation/native'
+import { DETAIL } from "../../constant";
 
 type State = {
   tab: {
@@ -51,65 +52,6 @@ const Spin = styled.View`
   justify-content: center;
   align-items: center;
 `;
-
-const Item = ({
-  item,
-  index,
-}: {
-  item: {
-    title: string;
-    media_name: string;
-    label: boolean;
-    comment_count: number;
-    datetime: string;
-    has_image: boolean;
-    large_mode?: boolean;
-    large_image_url?: string;
-    image_list?: {
-      url: string;
-      width: number;
-      height: number;
-    }[];
-    image_url: string;
-    has_video: boolean;
-    video_detail_info?: any;
-    source_url: string;
-  };
-  index: number;
-}) => {
-  const {
-    has_image: hasImage,
-    large_mode: largeMode,
-    image_list: imageList,
-    image_url: imageUrl,
-    has_video: hasVideo,
-    video_detail_info: videoDetailInfo,
-    large_image_url: largeImageUrl,
-    source_url: sourceUrl
-  } = item;
-
-  const handlePress = () => {
-    
-  }
-
-  return (
-    <ListView>
-      <TouchableHighlight onPress={() => handlePress()} underlayColor='#eee'>
-        <ItemWrap>
-          {!hasImage && !hasVideo && !largeImageUrl && <NonePic item={item} />}
-          {hasImage && largeMode && largeImageUrl && <OneLargePic item={item} />}
-          {hasImage && imageList?.length === 0 && imageUrl && (
-            <OneNormalPic item={item} />
-          )}
-          {hasImage && imageList?.length === 3 && (
-            <ThreeNormalPics item={item} />
-          )}
-          {hasVideo && videoDetailInfo && <OneNormalPic item={item} />}
-        </ItemWrap>
-      </TouchableHighlight>
-    </ListView>
-  );
-};
 
 const NewsList = ({ setController }: { setController: any }) => {
   const dispatch = useDispatch()
@@ -154,6 +96,67 @@ const NewsList = ({ setController }: { setController: any }) => {
     );
   }, [selectedTabId]);
 
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: {
+      title: string;
+      media_name: string;
+      label: boolean;
+      comment_count: number;
+      datetime: string;
+      has_image: boolean;
+      large_mode?: boolean;
+      large_image_url?: string;
+      image_list?: {
+        url: string;
+        width: number;
+        height: number;
+      }[];
+      image_url: string;
+      has_video: boolean;
+      video_detail_info?: any;
+      source_url: string;
+    };
+    index: number;
+  }) => {
+    const {
+      has_image: hasImage,
+      large_mode: largeMode,
+      image_list: imageList,
+      image_url: imageUrl,
+      has_video: hasVideo,
+      video_detail_info: videoDetailInfo,
+      large_image_url: largeImageUrl,
+      source_url: sourceUrl
+    } = item;
+  
+    const handlePress = () => {
+      navigation.navigate(DETAIL, {
+        url: sourceUrl
+      })
+    }
+  
+    return (
+      <ListView>
+        <TouchableHighlight onPress={() => handlePress()} underlayColor='#eee'>
+          <ItemWrap>
+            {!hasImage && !hasVideo && !largeImageUrl && <NonePic item={item} />}
+            {hasImage && largeMode && largeImageUrl && <OneLargePic item={item} />}
+            {hasImage && imageList?.length === 0 && imageUrl && (
+              <OneNormalPic item={item} />
+            )}
+            {hasImage && imageList?.length === 3 && (
+              <ThreeNormalPics item={item} />
+            )}
+            {hasVideo && videoDetailInfo && <OneNormalPic item={item} />}
+          </ItemWrap>
+        </TouchableHighlight>
+      </ListView>
+    );
+  };
+
   return (
     <NewsContainer>
       {fetchLoading ? (
@@ -162,7 +165,7 @@ const NewsList = ({ setController }: { setController: any }) => {
         </Spin>
       ) : (
         <FlatList
-          renderItem={Item}
+          renderItem={renderItem}
           data={news}
           keyExtractor={(item, index) => index.toString()}
           onRefresh={handleRefresh}

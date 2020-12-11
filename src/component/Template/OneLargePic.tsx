@@ -26,8 +26,6 @@ const LargeImage = styled.Image`
 
 export default ({ item }: Props) => {
   const { title, large_image_url: largeImageUrl, media_name: mediaName, label, comment_count: commentCount, datetime } = item
-
-  console.log('largeImageUrl::', largeImageUrl)
   const time = getFormatTime(datetime)
   return (
     <>

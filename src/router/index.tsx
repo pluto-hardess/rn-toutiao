@@ -6,6 +6,7 @@ import { HOME, SEARCH, DETAIL } from '../constant/index'
 import Icon from '../component/Icon'
 import HomePage from '../pages/Home'
 import SearchPage from '../pages/Search'
+import DetailPage from '../pages/DetailPage'
 
 const Tab = createBottomTabNavigator()
 
@@ -16,6 +17,7 @@ const HomeStackScreen = () => {
   return (
     <Home.Navigator>
       <Home.Screen name={HOME} component={HomePage}/>
+      <Home.Screen name={DETAIL} component={DetailPage}/>
     </Home.Navigator>
   )
 }

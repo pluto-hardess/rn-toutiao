@@ -70,4 +70,4 @@ export const tabList = [
 export const MAIN_PAGE = '首页'
 export const SEARCH = '搜索'
 
-export const DETAIL = 'detail'
+export const DETAIL = '详情'
