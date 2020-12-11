@@ -2,9 +2,16 @@ import React, { useEffect, useCallback, useState } from "react";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNews } from "../../redux/actions/newsAction/index";
-import { setSpText } from "../../utils/index";
-import { FlatList, ActivityIndicator } from "react-native";
-import { createController } from '../../utils/createController'
+import { s } from "../../utils/index";
+import { FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
+import { createController } from "../../utils/createController";
+import {
+  NonePic,
+  OneLargePic,
+  OneNormalPic,
+  ThreeNormalPics,
+} from "../../component/Template/index";
+import { useNavigation } from '@react-navigation/native'
 
 type State = {
   tab: {
@@ -17,7 +24,7 @@ type State = {
     }[];
   };
   news: {
-    data: Object[];
+    data: any;
     fetchLoading: boolean;
     hasMore: boolean;
   };
@@ -29,15 +36,14 @@ const NewsContainer = styled.View`
 `;
 
 const ListView = styled.View`
-  margin: 0 ${setSpText(30)}px;
+  margin: 0 ${s(30)}px;
+  border-bottom-width: ${s(0.5)}px;
+  border-bottom-color: rgba(221, 221, 221, 0.6);
 `;
 
-const ListText = styled.Text`
-  min-height: ${setSpText(84)}px;
-  padding: ${setSpText(32)}px 0;
-  color: #222;
-  font-size: ${setSpText(34)}px;
-  font-family: Helvetica;
+const ItemWrap = styled.View`
+  min-height: ${s(84)}px;
+  padding: ${s(32)}px 0;
 `;
 
 const Spin = styled.View`
@@ -46,49 +52,107 @@ const Spin = styled.View`
   align-items: center;
 `;
 
-const Item = ({ item }: { item: { title: string } }) => {
+const Item = ({
+  item,
+  index,
+}: {
+  item: {
+    title: string;
+    media_name: string;
+    label: boolean;
+    comment_count: number;
+    datetime: string;
+    has_image: boolean;
+    large_mode?: boolean;
+    large_image_url?: string;
+    image_list?: {
+      url: string;
+      width: number;
+      height: number;
+    }[];
+    image_url: string;
+    has_video: boolean;
+    video_detail_info?: any;
+    source_url: string;
+  };
+  index: number;
+}) => {
+  const {
+    has_image: hasImage,
+    large_mode: largeMode,
+    image_list: imageList,
+    image_url: imageUrl,
+    has_video: hasVideo,
+    video_detail_info: videoDetailInfo,
+    large_image_url: largeImageUrl,
+    source_url: sourceUrl
+  } = item;
+
+  const handlePress = () => {
+    
+  }
+
   return (
     <ListView>
-      <ListText>{item.title}</ListText>
+      <TouchableHighlight onPress={() => handlePress()} underlayColor='#eee'>
+        <ItemWrap>
+          {!hasImage && !hasVideo && !largeImageUrl && <NonePic item={item} />}
+          {hasImage && largeMode && largeImageUrl && <OneLargePic item={item} />}
+          {hasImage && imageList?.length === 0 && imageUrl && (
+            <OneNormalPic item={item} />
+          )}
+          {hasImage && imageList?.length === 3 && (
+            <ThreeNormalPics item={item} />
+          )}
+          {hasVideo && videoDetailInfo && <OneNormalPic item={item} />}
+        </ItemWrap>
+      </TouchableHighlight>
     </ListView>
-  )
-}
+  );
+};
 
 const NewsList = ({ setController }: { setController: any }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const navigation = useNavigation()
   const { selectedTabId, tabList } = useSelector((state: State) => state.tab);
   const { data: news, fetchLoading, hasMore } = useSelector(
     (state: State) => state.news
-  )
-  const [refresh, setRefresh] = useState(false)
+  );
+  const [refresh, setRefresh] = useState(false);
 
   const getReqField = useCallback((id: number) => {
-    let reqField = ''
+    let reqField = "";
     tabList.forEach((tab) => {
       if (tab.tabId === id) {
         reqField = tab.reqField;
       }
     });
-    return reqField
+    return reqField;
   }, []);
 
   const handleRefresh = useCallback(() => {
-    const { controller } = createController()
-    setController((_: any) => controller)
-    dispatch(fetchNews({
-      type: getReqField(selectedTabId),
-      controller
-    }))
-  }, [selectedTabId])
+    const { controller } = createController();
+    setController((_: any) => controller);
+    // setRefresh(true)
+    dispatch(
+      fetchNews({
+        type: getReqField(selectedTabId),
+        controller,
+      })
+    );
+    // setRefresh(false)
+  }, [selectedTabId]);
 
   useEffect(() => {
-    const { controller } = createController()
-    setController((_: any) => controller)
-    dispatch(fetchNews({
-      type: getReqField(selectedTabId),
-      controller
-    }))
-  }, [selectedTabId])
+    const { controller } = createController();
+    setController((_: any) => controller);
+    dispatch(
+      fetchNews({
+        type: getReqField(selectedTabId),
+        controller,
+      })
+    );
+  }, [selectedTabId]);
 
   return (
     <NewsContainer>
@@ -103,7 +167,7 @@ const NewsList = ({ setController }: { setController: any }) => {
           keyExtractor={(item, index) => index.toString()}
           onRefresh={handleRefresh}
           refreshing={refresh}
-          />
+        />
       )}
     </NewsContainer>
   );

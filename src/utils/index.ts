@@ -19,7 +19,7 @@ const screenPxHeight = PixelRatio.getPixelSizeForLayoutSize(designHeight);
 /**
  * 设置text
  */
-export function setSpText(size: number) {
+export function s(size: number) {
   const scale = Math.min(
     screenWidth / designWidth,
     screenHeight / designHeight

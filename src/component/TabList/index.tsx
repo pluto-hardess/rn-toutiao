@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import styled from "styled-components/native";
-import { setSpText } from "../../utils/index";
+import { s } from "../../utils/index";
 import { ScrollView } from "react-native";
 import Color from "../../constant/color";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,13 +8,13 @@ import { pressTab } from "../../redux/actions/tabAction";
 
 const TabContainer = styled.View`
   width: 100%;
-  height: ${setSpText(72)}px;
+  height: ${s(72)}px;
   background: #f4f5f6;
 `;
 
-const tabMargin = setSpText(10);
-const tabPadding = setSpText(20);
-const tabFontSize = setSpText(34);
+const tabMargin = s(10);
+const tabPadding = s(20);
+const tabFontSize = s(34);
 
 const TabView = styled.View`
   margin: ${tabMargin}px 0 ${tabMargin}px ${tabMargin}px;
