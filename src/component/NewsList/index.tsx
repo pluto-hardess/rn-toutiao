@@ -38,7 +38,7 @@ const NewsContainer = styled.View`
 
 const ListView = styled.View`
   margin: 0 ${s(30)}px;
-  border-bottom-width: ${s(0.5)}px;
+  border-bottom-width: ${s(1)}px;
   border-bottom-color: rgba(221, 221, 221, 0.6);
 `;
 

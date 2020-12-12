@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components/native'
+import styled, { css } from 'styled-components/native'
 import { s } from '../../utils';
 
 interface Props {
@@ -11,7 +11,9 @@ const ListText = styled.Text<{ right: number }>`
   color: #222;
   font-size: ${s(34)}px;
   font-family: Helvetica;
-  margin-right: ${props => props.right}px;
+  ${props => props.right && css`
+    margin-right: ${props.right}px;
+  `}
 `;
 
 const Title = ({ title, marginRight }: Props) => {

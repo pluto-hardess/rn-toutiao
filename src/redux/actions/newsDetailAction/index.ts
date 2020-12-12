@@ -6,11 +6,11 @@ export const fetchNewsDetail = createAsyncThunk(
   FETCH_DETAIL,
   async (id: string) => {
     try {
-      const data = await getDetailPage(id)
-      console.log('data:::', data)
-      return data
+      const data: any = await getDetailPage(id)
+      if (data.err_code === 0) {
+        return data.data
+      }
     } catch (e) {
-      console.log(e)
       return e
     }
   }

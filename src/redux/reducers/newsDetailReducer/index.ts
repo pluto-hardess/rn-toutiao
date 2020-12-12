@@ -5,6 +5,10 @@ type InitialState = {
   data: {
     contents: Array<string>;
     images: Array<string>;
+    title: string;
+    source: string;
+    time: string;
+    avator: string;
   },
   loading: boolean;
 }
@@ -12,7 +16,11 @@ type InitialState = {
 const initialState: InitialState = {
   data: {
     contents: [],
-    images: []
+    images: [],
+    title: '',
+    source: '',
+    time: '',
+    avator: ''
   },
   loading: false
 }
@@ -23,7 +31,7 @@ export const newsDetailReducer = createReducer(initialState, {
   },
   [fetchNewsDetail.fulfilled]: (state, action) => {
     state.loading = false
-    console.log('action::', action)
+    state.data = action.payload
   },
   [fetchNewsDetail.rejected]: (state) => {
     state.loading = false
