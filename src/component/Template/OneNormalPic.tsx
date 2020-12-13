@@ -62,7 +62,7 @@ export default ({ item }: Props) => {
       <RightField>
         <RightImage
           source={{
-            uri: hasImage ? imageUrl : videoDetailInfo.detail_video_large_image.url
+            uri: hasImage ? imageUrl : videoDetailInfo?.detail_video_large_image?.url
           }}
         />
       </RightField>

@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNewsDetail } from "../../redux/actions/newsDetailAction";
-import { ActivityIndicator, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { getFormatTime } from "../../utils/formatDate";
 import { s } from "../../utils";
+import Spinner from '../../component/Spin'
 
 interface Props {
   navigation: any;
@@ -59,12 +60,6 @@ const AuthorDesc = styled.Text`
   margin-top: 4px;
 `;
 
-const Spin = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
 const ArticleFiled = styled.Text`
   margin-bottom: ${s(18)}px;
   font-size: 18px;
@@ -77,7 +72,7 @@ const ArticleImage = styled.Image`
   margin-bottom: ${s(18)}px;
 `;
 
-export default ({ navigation, route }: Props) => {
+export default ({ route }: Props) => {
   const dispatch = useDispatch();
   const { loading, data } = useSelector((state: any) => state?.newsDetail);
 
@@ -90,9 +85,7 @@ export default ({ navigation, route }: Props) => {
   return (
     <Container>
       {loading ? (
-        <Spin>
-          <ActivityIndicator size="large" color="#999" />
-        </Spin>
+        <Spinner />
       ) : (
         <ScrollView>
           <ArticleHeader>

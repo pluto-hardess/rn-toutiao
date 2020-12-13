@@ -1,9 +1,9 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNews } from "../../redux/actions/newsAction/index";
 import { s } from "../../utils/index";
-import { FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
+import { FlatList, TouchableHighlight } from "react-native";
 import { createController } from "../../utils/createController";
 import {
   NonePic,
@@ -11,8 +11,9 @@ import {
   OneNormalPic,
   ThreeNormalPics,
 } from "../../component/Template/index";
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { DETAIL } from "../../constant";
+import Spiner from '../Spin'
 
 type State = {
   tab: {
@@ -31,6 +32,28 @@ type State = {
   };
 };
 
+export type DateItem = {
+  item: {
+    title: string;
+    media_name: string;
+    label: boolean;
+    comment_count: number;
+    datetime: string;
+    has_image: boolean;
+    large_image_url?: string;
+    image_list?: {
+      url: string;
+      width: number;
+      height: number;
+    }[];
+    image_url: string;
+    has_video: boolean;
+    video_detail_info?: any;
+    source_url: string;
+    large_mode: boolean | undefined;
+  };
+}
+
 const NewsContainer = styled.View`
   flex: 1;
   background: #fff;
@@ -45,12 +68,6 @@ const ListView = styled.View`
 const ItemWrap = styled.View`
   min-height: ${s(84)}px;
   padding: ${s(32)}px 0;
-`;
-
-const Spin = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
 `;
 
 const NewsList = ({ setController }: { setController: any }) => {
@@ -85,7 +102,7 @@ const NewsList = ({ setController }: { setController: any }) => {
     // setRefresh(false)
   }, [selectedTabId]);
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     const { controller } = createController();
     setController((_: any) => controller);
     dispatch(
@@ -94,42 +111,20 @@ const NewsList = ({ setController }: { setController: any }) => {
         controller,
       })
     );
-  }, [selectedTabId]);
+  }, [selectedTabId]))
 
   const renderItem = ({
-    item,
-    index,
-  }: {
-    item: {
-      title: string;
-      media_name: string;
-      label: boolean;
-      comment_count: number;
-      datetime: string;
-      has_image: boolean;
-      large_mode?: boolean;
-      large_image_url?: string;
-      image_list?: {
-        url: string;
-        width: number;
-        height: number;
-      }[];
-      image_url: string;
-      has_video: boolean;
-      video_detail_info?: any;
-      source_url: string;
-    };
-    index: number;
-  }) => {
+    item
+  }: DateItem) => {
     const {
       has_image: hasImage,
-      large_mode: largeMode,
       image_list: imageList,
       image_url: imageUrl,
       has_video: hasVideo,
       video_detail_info: videoDetailInfo,
       large_image_url: largeImageUrl,
-      source_url: sourceUrl
+      source_url: sourceUrl,
+      large_mode: largeMode
     } = item;
   
     const handlePress = () => {
@@ -160,9 +155,7 @@ const NewsList = ({ setController }: { setController: any }) => {
   return (
     <NewsContainer>
       {fetchLoading ? (
-        <Spin>
-          <ActivityIndicator size="large" color="#999" />
-        </Spin>
+        <Spiner />
       ) : (
         <FlatList
           renderItem={renderItem}
