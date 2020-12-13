@@ -32,7 +32,7 @@ type State = {
   };
 };
 
-export type DateItem = {
+export type DataItem = {
   item: {
     title: string;
     media_name: string;
@@ -51,6 +51,7 @@ export type DateItem = {
     video_detail_info?: any;
     source_url: string;
     large_mode: boolean | undefined;
+    video_style: number;
   };
 }
 
@@ -69,6 +70,37 @@ const ItemWrap = styled.View`
   min-height: ${s(84)}px;
   padding: ${s(32)}px 0;
 `;
+
+const JudgeRenderItem = ({ item }: DataItem) => {
+  const {
+    has_image: hasImage,
+    image_list: imageList,
+    image_url: imageUrl,
+    has_video: hasVideo,
+    video_detail_info: videoDetailInfo,
+    large_image_url: largeImageUrl,
+    source_url: sourceUrl,
+    large_mode: largeMode,
+    video_style: videoStyle
+  } = item;
+  return (
+    <>
+      {(!hasImage && !hasVideo && imageList?.length === 0)
+        ? <NonePic item={item} />
+        : (hasImage && !hasVideo && imageList?.length === 3)
+        ? <ThreeNormalPics item={item} />
+        : (hasImage && !hasVideo && imageUrl && imageList?.length === 0)
+        ? <OneNormalPic item={item} />
+        : (hasVideo && !hasImage && largeImageUrl && imageList?.length === 0 && videoStyle === 3)
+        ? <OneLargePic item={item} />
+        : (hasImage && !hasVideo && largeImageUrl && imageList?.length === 0)
+        ? <OneLargePic item={item} />
+        : (hasVideo && !hasImage && largeImageUrl && imageList?.length === 0 && videoStyle === 2)
+        ? <OneNormalPic item={item} />
+        : null}
+    </>
+  )
+}
 
 const NewsList = ({ setController }: { setController: any }) => {
   const dispatch = useDispatch()
@@ -115,16 +147,9 @@ const NewsList = ({ setController }: { setController: any }) => {
 
   const renderItem = ({
     item
-  }: DateItem) => {
+  }: DataItem) => {
     const {
-      has_image: hasImage,
-      image_list: imageList,
-      image_url: imageUrl,
-      has_video: hasVideo,
-      video_detail_info: videoDetailInfo,
-      large_image_url: largeImageUrl,
-      source_url: sourceUrl,
-      large_mode: largeMode
+      source_url: sourceUrl
     } = item;
   
     const handlePress = () => {
@@ -137,15 +162,7 @@ const NewsList = ({ setController }: { setController: any }) => {
       <ListView>
         <TouchableHighlight onPress={() => handlePress()} underlayColor='#eee'>
           <ItemWrap>
-            {!hasImage && !hasVideo && !largeImageUrl && <NonePic item={item} />}
-            {hasImage && largeMode && largeImageUrl && <OneLargePic item={item} />}
-            {hasImage && imageList?.length === 0 && imageUrl && (
-              <OneNormalPic item={item} />
-            )}
-            {hasImage && imageList?.length === 3 && (
-              <ThreeNormalPics item={item} />
-            )}
-            {hasVideo && videoDetailInfo && <OneNormalPic item={item} />}
+            <JudgeRenderItem item={item} />
           </ItemWrap>
         </TouchableHighlight>
       </ListView>
