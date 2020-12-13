@@ -27,7 +27,7 @@ export const newsReducer = createReducer(initialState, (builder) => {
     )
     .addMatcher<FulfilledAction>(
       action => action.type.endsWith('/fulfilled'),
-      (state, action) => {
+      (state, action: any) => {
         state.fetchLoading = false
         state.data = action.payload.data
         state.hasMore = action.payload.has_more

@@ -97,7 +97,7 @@ const JudgeRenderItem = ({ item }: DataItem) => {
         ? <OneLargePic item={item} />
         : (hasVideo && !hasImage && largeImageUrl && imageList?.length === 0 && videoStyle === 2)
         ? <OneNormalPic item={item} />
-        : null}
+        : <NonePic item={item} />}
     </>
   )
 }

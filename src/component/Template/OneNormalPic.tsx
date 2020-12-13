@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components/native'
-import { s } from '../../utils'
-import Title from '../Title'
-import NewsInfo from '../NewsInfo'
-import { getFormatTime } from '../../utils/formatDate'
+import React from "react";
+import styled from "styled-components/native";
+import { s } from "../../utils";
+import Title from "../Title";
+import NewsInfo from "../NewsInfo";
+import { getFormatTime } from "../../utils/formatDate";
 
 interface Props {
   item: {
@@ -29,25 +29,34 @@ interface Props {
 const Container = styled.View`
   width: 100%;
   flex-direction: row;
-`
+`;
 
 const LeftField = styled.View`
   width: 67%;
-`
+`;
 
 const RightField = styled.View`
   width: 33%;
   justify-content: center;
-`
+`;
 
 const RightImage = styled.Image`
   width: 100%;
   height: ${s(145)}px;
-`
+`;
 
 export default ({ item }: Props) => {
-  const { image_url: imageUrl, title, media_name: mediaName, label, comment_count: commentCount, datetime, video_detail_info: videoDetailInfo, has_image: hasImage } = item
-  const time = getFormatTime(datetime)
+  const {
+    image_url: imageUrl,
+    title,
+    media_name: mediaName,
+    label,
+    comment_count: commentCount,
+    datetime,
+    video_detail_info: videoDetailInfo,
+    has_image: hasImage,
+  } = item;
+  const time = getFormatTime(datetime);
   return (
     <Container>
       <LeftField>
@@ -62,11 +71,12 @@ export default ({ item }: Props) => {
       <RightField>
         <RightImage
           source={{
-            uri: hasImage ? imageUrl : videoDetailInfo?.detail_video_large_image?.url
+            uri: hasImage
+              ? imageUrl
+              : videoDetailInfo?.detail_video_large_image?.url,
           }}
         />
       </RightField>
     </Container>
-  )
-}
-
+  );
+};
