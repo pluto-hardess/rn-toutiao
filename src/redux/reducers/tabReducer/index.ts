@@ -1,22 +1,61 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { pressTab } from '../../actions/tabAction/index'
+import { pressTab, resetPage, cacheList, setTimeStamp } from '../../actions/tabAction/index'
 import { tabList } from '../../../constant/index'
 
 const initailState = {
   tabList,
-  selectedTabId: tabList[0].tabId
+  selectedId: tabList[0].tabId
 }
 
 export const tabReducer = createReducer(initailState, (builder) => {
   builder
     .addCase(pressTab, (state, action) => {
-      state.selectedTabId = action.payload.tabId
+      state.tabList = state.tabList.map(tab => ({
+        ...tab,
+        selected: tab.tabId === action.payload.tabId
+      }))
+      state.selectedId = action.payload.tabId
+    })
+    .addCase(resetPage, (state) => {
       state.tabList = state.tabList.map(tab => {
-        tab.selected = false
-        if (tab.tabId === action.payload.tabId) {
-          tab.selected = true
+        if (tab.selected) {
+          return {
+            ...tab,
+            page: 1
+          }
+        } else {
+          return {
+            ...tab
+          }
         }
-        return tab
+      })
+    })
+    .addCase(cacheList, (state, action) => {
+      state.tabList = state.tabList.map(tab => {
+        if (tab.selected) {
+          return {
+            ...tab,
+            cache: action.payload.list
+          }
+        } else {
+          return {
+            ...tab
+          }
+        }
+      })
+    })
+    .addCase(setTimeStamp, (state, action) => {
+      state.tabList = state.tabList.map(tab => {
+        if (tab.selected) {
+          return {
+            ...tab,
+            timeStamp: action.payload.timeStamp
+          }
+        } else {
+          return {
+            ...tab
+          }
+        }
       })
     })
     .addDefaultCase(state => state)

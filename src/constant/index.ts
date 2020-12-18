@@ -14,55 +14,91 @@ export const tabList = [
     tabId: 0,
     tabName: '推荐',
     selected: true,
-    reqField: 'home'
+    type: 'home',
+    timeStamp: 0,
+    cache: [],
+    page: 1,
+    limit: 8
   },
   {
     tabId: 1,
     tabName: VIDEO,
     selected: false,
-    reqField: 'video'
+    type: 'video',
+    timeStamp: 0,
+    cache: [],
+    page: 1,
+    limit: 8
   },
   {
     tabId: 2,
     tabName: HOT_SPOT,
     selected: false,
-    reqField: 'spot'
+    type: 'spot',
+    timeStamp: 0,
+    cache: [],
+    page: 1,
+    limit: 12
   },
   {
     tabId: 3,
     tabName: COMMUNITY,
     selected: false,
-    reqField: 'community'
+    type: 'community',
+    timeStamp: 0,
+    cache: [],
+    page: 1,
+    limit: 8
   },
   {
     tabId: 4,
     tabName: ENTERTAINMENT,
     selected: false,
-    reqField: 'entertain'
+    type: 'entertain',
+    timeStamp: 0,
+    cache: [],
+    page: 1,
+    limit: 9
   },
   {
     tabId: 5,
     tabName: MILITARY,
     selected: false,
-    reqField: 'military'
+    type: 'military',
+    timeStamp: 0,
+    cache: [],
+    page: 1,
+    limit: 8
   },
   {
     tabId: 6,
     tabName: TECHNOLOGY,
     selected: false,
-    reqField: 'technology'
+    type: 'technology',
+    timeStamp: 0,
+    cache: [],
+    page: 1,
+    limit: 15
   },
   {
     tabId: 7,
     tabName: SPORTS,
     selected: false,
-    reqField: 'sports'
+    type: 'sports',
+    timeStamp: 0,
+    cache: [],
+    page: 1,
+    limit: 6
   },
   {
     tabId: 8,
     tabName: FINANCE,
     selected: false,
-    reqField: 'finance'
+    type: 'finance',
+    timeStamp: 0,
+    cache: [],
+    page: 1,
+    limit: 15
   }
 ]
 

@@ -9,4 +9,34 @@ const store = configureStore({
   })
 })
 
+export type State = {
+  news: {
+    data: never[];
+    fetchLoading: boolean;
+    hasMore: boolean;
+  };
+  tab: {
+    tabList: {
+        tabId: number;
+        tabName: string;
+        selected: boolean;
+        type: string;
+        timeStamp: number;
+        cache: never[];
+        page: number;
+        limit: number;
+    }[];
+    selectedId: number;
+  };
+  data: {
+    contents: never[];
+    images: never[];
+    title: string;
+    source: string;
+    time: string;
+    avator: string;
+  };
+  loading: boolean;
+}
+
 export { store }
