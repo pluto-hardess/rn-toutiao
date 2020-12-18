@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNews } from "../../redux/actions/newsAction/index";
@@ -15,7 +15,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { DETAIL } from "../../constant";
 import Spiner from '../Spin'
 import { State } from '../../redux/store'
-import { cacheList, setTimeStamp } from '../../redux/actions/tabAction'
+import { cacheList, setTimeStamp, setCache } from '../../redux/actions/tabAction'
 
 export type DataItem = {
   item: {
@@ -118,8 +118,8 @@ const NewsList = ({ setController }: { setController: any }) => {
     const { controller } = createController();
     setController((_: any) => controller);
     const { type, timeStamp, cache, page, limit } = getTabMessage()
-    if (new Date().getTime() - timeStamp <= 15 * 1000) {
-      dispatch(cacheList(cache))
+    if (new Date().getTime() - timeStamp <= 30 * 1000) {
+      dispatch(setCache(cache))
     } else {
       dispatch(
         fetchNews({
