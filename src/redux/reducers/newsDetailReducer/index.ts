@@ -26,14 +26,14 @@ const initialState: InitialState = {
 }
 
 export const newsDetailReducer = createReducer(initialState, {
-  [fetchNewsDetail.pending]: (state) => {
+  [(fetchNewsDetail.pending) as any]: (state) => {
     state.loading = true
   },
-  [fetchNewsDetail.fulfilled]: (state, action) => {
+  [(fetchNewsDetail.fulfilled) as any]: (state, action) => {
     state.loading = false
     state.data = action.payload
   },
-  [fetchNewsDetail.rejected]: (state) => {
+  [(fetchNewsDetail.rejected) as any]: (state) => {
     state.loading = false
   }
 })

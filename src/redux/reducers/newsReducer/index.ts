@@ -6,15 +6,19 @@ type RejectedAction = ReturnType<GenericAsyncThunk['rejected']>
 type FulfilledAction = ReturnType<GenericAsyncThunk['fulfilled']>
 
 type InitialState = {
-  data: Object[],
-  fetchLoading: boolean,
-  hasMore: false
+  data: Object[];
+  fetchLoading: boolean;
+  hasMore: false;
+  page: number;
+  limit: number;
 }
 
 const initialState: InitialState = {
   data: [],
   fetchLoading: false,
-  hasMore: false
+  hasMore: false,
+  page: 1,
+  limit: 15
 }
 
 export const newsReducer = createReducer(initialState, (builder) => {
